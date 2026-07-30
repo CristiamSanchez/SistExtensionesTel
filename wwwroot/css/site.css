@@ -1,0 +1,71 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.telefonos-page {
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(7, 31, 47, 0.30), rgba(7, 31, 47, 0.30)),
+    url('/images/index-bg.jpg') center center / cover no-repeat;
+  position: relative;
+}
+
+body.index-bg-page {
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(7, 31, 47, 0.30), rgba(7, 31, 47, 0.30)),
+    url('/images/index-bg.jpg') center center / contain no-repeat;
+  background-position: center center;
+  background-size: 75% auto;
+  background-origin: content-box;
+}
+
+.login-page {
+  min-height: 100vh;
+  background: url('/images/login-bg.jpg') center center / cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.login-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+}
+
+.login-page .login-card {
+  position: relative;
+  z-index: 1;
+  width: 380px;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #033526;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}

@@ -1,0 +1,33 @@
+@model SistemaTelefonico.Models.Telefono
+
+@{
+    ViewData["Title"] = "Eliminar";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card border-danger shadow">
+
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Eliminar Teléfono</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <h5>¿Seguro que deseas eliminar este registro?</h5>
+
+                    <p><strong>@Model.NombreDueno</strong> - @Model.NumeroTelefono</p>
+
+                   <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-danger">
+                            Eliminar
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

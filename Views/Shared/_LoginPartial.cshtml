@@ -1,0 +1,45 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="dropdown">
+        <button class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
+            👤 @User.Identity?.Name
+        </button>
+
+        <ul class="dropdown-menu dropdown-menu-end shadow">
+
+            <li>
+                <span class="dropdown-item-text">
+                    Rol: @User.Claims.FirstOrDefault(c => c.Type.Contains("role"))?.Value
+                </span>
+            </li>
+
+            <li><hr class="dropdown-divider"></li>
+
+            <li>
+                @if (SignInManager.IsSignedIn(User))
+                    {
+                        <form asp-area="Identity"
+                            asp-page="/Account/Logout"
+                            method="post"
+                            class="d-inline">
+
+                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                Cerrar sesión
+                            </button>
+
+                        </form>
+                    }
+            </li>
+        </ul>
+    </div>
+}
+else
+{
+    <a class="btn btn-success" asp-area="Identity" asp-page="/Account/Login">
+        Iniciar sesión
+    </a>
+}

@@ -1,0 +1,63 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: guia-telefonica-sqlserver
+    restart: unless-stopped
+
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+      MSSQL_SA_PASSWORD: "${MSSQL_SA_PASSWORD:-YourStrongPassword123!}"
+      MSSQL_MEMORY_LIMIT_MB: "2048"
+
+    ports:
+      - "1433:1433"
+
+    volumes:
+      - guia_telefonica_sql_data:/var/opt/mssql
+
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"${MSSQL_SA_PASSWORD:-YourStrongPassword123!}\" -C -Q \"SELECT 1\" || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+    mem_limit: 2300m
+    cpus: 2.0
+
+  sql-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      MSSQL_SA_PASSWORD: "${MSSQL_SA_PASSWORD:-YourStrongPassword123!}"
+      APP_DB_USER: "${APP_DB_USER:-appuser}"
+      APP_DB_PASSWORD: "${APP_DB_PASSWORD:-ChangeMe123!}"
+    volumes:
+      - ../ST-portable.sql:/scripts/ST-portable.sql:ro
+    entrypoint:
+      ["/bin/bash", "-c", "until /opt/mssql-tools18/bin/sqlcmd -S sqlserver -U sa -P \"$${MSSQL_SA_PASSWORD}\" -C -Q \"SELECT 1\" >/dev/null 2>&1; do sleep 2; done; /opt/mssql-tools18/bin/sqlcmd -S sqlserver -U sa -P \"$${MSSQL_SA_PASSWORD}\" -C -v APP_DB_USER=\"$${APP_DB_USER}\" APP_DB_PASSWORD=\"$${APP_DB_PASSWORD}\" -i /scripts/ST-portable.sql"]
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: guia-telefonica-app
+    restart: unless-stopped
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      sql-init:
+        condition: service_completed_successfully
+    environment:
+      ASPNETCORE_ENVIRONMENT: Docker
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=SISTEMA_TELEFONICO;User Id=${APP_DB_USER:-appuser};Password=${APP_DB_PASSWORD:-ChangeMe123!};TrustServerCertificate=True;Encrypt=False"
+    ports:
+      - "8091:8080"
+
+volumes:
+  guia_telefonica_sql_data:
+    name: guia_telefonica_sql_data

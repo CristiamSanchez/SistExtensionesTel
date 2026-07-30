@@ -1,0 +1,163 @@
+@model SistemaTelefonico.Models.UsuariosIndexViewModel
+
+@{
+    ViewData["Title"] = "Gestión de Usuarios";
+}
+
+<div class="container mt-4">
+    <h3 class="mb-3">Gestión de Usuarios</h3>
+
+    @if (TempData["SuccessMessage"] is string successMessage)
+    {
+        <div class="alert alert-success">@successMessage</div>
+    }
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-dark text-white">
+            Crear nuevo usuario
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label asp-for="NuevoUsuario.Email" class="form-label"></label>
+                        <input asp-for="NuevoUsuario.Email" class="form-control" />
+                        <span asp-validation-for="NuevoUsuario.Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label asp-for="NuevoUsuario.Password" class="form-label">Contraseña</label>
+                        <input asp-for="NuevoUsuario.Password" class="form-control" />
+                        <span asp-validation-for="NuevoUsuario.Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label asp-for="NuevoUsuario.ConfirmPassword" class="form-label">Confirmar contraseña</label>
+                        <input asp-for="NuevoUsuario.ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="NuevoUsuario.ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label asp-for="NuevoUsuario.Rol" class="form-label">Rol</label>
+                        <select asp-for="NuevoUsuario.Rol" class="form-select">
+                            <option value="Lectura">Lectura</option>
+                            <option value="Administrador">Administrador</option>
+                        </select>
+                        <span asp-validation-for="NuevoUsuario.Rol" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary">Crear usuario</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach (var user in Model.Usuarios)
+        {
+            <div class="col-md-4">
+                <div class="card shadow mb-3">
+                    <div class="card-header bg-primary text-white">
+                        Usuario
+                    </div>
+
+                    <div class="card-body">
+                        <p class="mb-1"><strong>@user.Email</strong></p>
+                        <p class="text-muted small mb-2">@user.UserName</p>
+                        <div>
+                            @foreach (var rol in user.Roles)
+                            {
+                                <span class="badge bg-secondary me-1">@rol</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="card-footer d-flex gap-2">
+                        <button type="button"
+                                class="btn btn-sm btn-warning"
+                                data-bs-toggle="modal"
+                                data-bs-target="#changePasswordModal"
+                                data-user-id="@user.Id"
+                                data-user-email="@user.Email">
+                            Cambiar contraseña
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title" id="changePasswordLabel">Cambiar contraseña</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body">
+                <form asp-action="CambiarPassword" method="post" id="formChangePassword">
+                    <input asp-for="CambiarPassword.UserId" type="hidden" id="changePasswordUserId" />
+                    <input asp-for="CambiarPassword.Email" type="hidden" id="changePasswordEmail" />
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Usuario</label>
+                        <input type="text" class="form-control" id="changePasswordUserEmailDisplay" readonly />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="CambiarPassword.Password" class="form-label">Nueva contraseña</label>
+                        <input asp-for="CambiarPassword.Password" class="form-control" />
+                        <span asp-validation-for="CambiarPassword.Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="CambiarPassword.ConfirmPassword" class="form-label">Confirmar contraseña</label>
+                        <input asp-for="CambiarPassword.ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="CambiarPassword.ConfirmPassword" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-warning" form="formChangePassword">Actualizar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        var changePasswordModal = document.getElementById('changePasswordModal');
+
+        changePasswordModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var userId = button.getAttribute('data-user-id');
+            var userEmail = button.getAttribute('data-user-email');
+
+            document.getElementById('changePasswordUserId').value = userId;
+            document.getElementById('changePasswordEmail').value = userEmail;
+            document.getElementById('changePasswordUserEmailDisplay').value = userEmail;
+        });
+
+        @if (TempData["OpenChangePasswordModal"] is not null)
+        {
+            <text>
+                document.addEventListener('DOMContentLoaded', function () {
+                    var modal = new bootstrap.Modal(changePasswordModal);
+                    modal.show();
+                });
+            </text>
+        }
+    </script>
+}

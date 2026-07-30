@@ -1,0 +1,55 @@
+﻿@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Crear Usuario";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height:80vh;">
+
+    <div class="card shadow" style="width: 450px;">
+
+        <div class="card-header bg-success text-white text-center">
+            <h4>👤 Crear Usuario</h4>
+            <small>Solo administradores</small>
+        </div>
+
+        <div class="card-body">
+
+            <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Input.Email" class="form-label"></label>
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Input.Password" class="form-label"></label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Input.ConfirmPassword" class="form-label"></label>
+                    <input asp-for="Input.ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">
+                    Crear Usuario
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

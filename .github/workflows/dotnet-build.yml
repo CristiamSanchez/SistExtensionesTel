@@ -22,7 +22,7 @@ jobs:
           cache: true
 
       - name: Restore dependencies
-        run: dotnet restore SistemaTelefonico.csproj
+        run: dotnet restore SistemaTelefonico/SistemaTelefonico.csproj
 
       - name: Build
-        run: dotnet build SistemaTelefonico.csproj --configuration Release --no-restore
+        run: dotnet build SistemaTelefonico/SistemaTelefonico.csproj --configuration Release --no-restore

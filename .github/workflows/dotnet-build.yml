@@ -21,7 +21,7 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore SistemaTelefonico/SistemaTelefonico.csproj
+        run: dotnet restore SistemaTelefonico.csproj
 
       - name: Build
-        run: dotnet build SistemaTelefonico/SistemaTelefonico.csproj --configuration Release --no-restore
+        run: dotnet build SistemaTelefonico.csproj --configuration Release --no-restore

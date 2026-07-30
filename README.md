@@ -20,19 +20,25 @@ Un proyecto práctico para consolidar el uso de MVC, Identity, Entity Framework 
 
 ## 🖼️ Screenshot gallery
 
-<div align="center">
+### Home
 
 ![Home](wwwroot/images/Porfolio/Home.png)
 
-| Vista | Captura |
-|------|---------|
-| Home | ![Home](wwwroot/images/Porfolio/Home.png) |
-| Login | ![Login](wwwroot/images/Porfolio/Login.png) |
-| Crear | ![Create](wwwroot/images/Porfolio/Create.png) |
-| Editar | ![Edit](wwwroot/images/Porfolio/Edit.png) |
-| Usuarios | ![Users](wwwroot/images/Porfolio/Users.png) |
+### Login
 
-</div>
+![Login](wwwroot/images/Porfolio/Login.png)
+
+### Crear
+
+![Create](wwwroot/images/Porfolio/Create.png)
+
+### Editar
+
+![Edit](wwwroot/images/Porfolio/Edit.png)
+
+### Usuarios
+
+![Users](wwwroot/images/Porfolio/Users.png)
 
 ## 🧭 Demo flow
 

@@ -1,43 +1,44 @@
 # SistExtensionesTel
 
 [![Build](https://github.com/CristiamSanchez/SistExtensionesTel/actions/workflows/dotnet-build.yml/badge.svg)](https://github.com/CristiamSanchez/SistExtensionesTel/actions/workflows/dotnet-build.yml)
+[![ASP.NET Core MVC](https://img.shields.io/badge/ASP.NET-Core%20MVC-512BD4?logo=dotnet&logoColor=white)](https://learn.microsoft.com/aspnet/core/)
+[![Docker Compose Ready](https://img.shields.io/badge/Docker-Compose%20Ready-2496ED?logo=docker&logoColor=white)](https://docs.docker.com/compose/)
 
-Aplicación web para gestionar extensiones telefónicas con ASP.NET Core MVC, ASP.NET Identity y SQL Server. El proyecto está pensado como una solución práctica de CRUD con validaciones de negocio, autenticación segura y una base de datos reproducible con Docker.
+Aplicación web para gestionar extensiones telefónicas con ASP.NET Core MVC, ASP.NET Identity y SQL Server. Este proyecto funciona como una pequeña solución CRUD con validaciones de negocio, autenticación y entorno reproducible con Docker.
 
-## ✨ Visión general
+## ✨ Proyecto en una frase
 
-Este repositorio demuestra un flujo completo de desarrollo para una pequeña aplicación empresarial orientada a gestión de contactos y extensiones:
+Un proyecto práctico para consolidar el uso de MVC, Identity, Entity Framework Core, SQL Server y Docker en un flujo real de desarrollo.
 
-- CRUD funcional de registros telefónicos
+## 🧩 Qué muestra este repositorio
+
+- CRUD completo de extensiones telefónicas
 - autenticación y autorización con ASP.NET Identity
-- persistencia con Entity Framework Core
-- contenedorización con Docker Compose para ejecución reproducible
-- preparación para GitHub como proyecto de portfolio técnico
+- acceso a datos con Entity Framework Core
+- base de datos inicializada de forma reproducible con SQL Server
+- ejecución local y de demo con Docker Compose
 
-## 🛠️ Stack tecnológico
+## 🖼️ Screenshot gallery
 
-- ASP.NET Core MVC
-- Razor Pages
-- ASP.NET Identity
-- Entity Framework Core
-- SQL Server 2022
-- Docker + Docker Compose
-- GitHub Actions
+<div align="center">
 
-## 📌 Funcionalidades clave
+![Home](wwwroot/images/Porfolio/Home.png)
 
-- registro, edición y eliminación de extensiones
-- validación para evitar duplicados de número
-- gestión de usuarios y acceso autenticado
-- estructura lista para ser presentada como proyecto de evidencia técnica
+| Vista | Captura |
+|------|---------|
+| Home | ![Home](wwwroot/images/Porfolio/Home.png) |
+| Login | ![Login](wwwroot/images/Porfolio/Login.png) |
+| Crear | ![Create](wwwroot/images/Porfolio/Create.png) |
+| Editar | ![Edit](wwwroot/images/Porfolio/Edit.png) |
+| Usuarios | ![Users](wwwroot/images/Porfolio/Users.png) |
 
-## 🧭 Demo flow para GitHub
+</div>
 
-Este es un flujo simple para mostrar el proyecto en una demo rápida:
+## 🧭 Demo flow
 
 1. Clona el repositorio.
-2. Crea un archivo `.env` con tus variables locales.
-3. Levanta el stack con Docker:
+2. Crea un archivo `.env` con las variables de entorno recomendadas.
+3. Ejecuta:
 
 ```bash
 docker compose -f SistemaTelefonico/compose.yaml up -d --build
@@ -46,19 +47,7 @@ docker compose -f SistemaTelefonico/compose.yaml up -d --build
 4. Abre la app en `http://localhost:8091`.
 5. Inicia sesión o registra una cuenta.
 6. Crea una extensión, edítala y valida el flujo completo.
-7. Prueba la validación de número duplicado para mostrar la lógica de negocio.
-
-## 🖼️ Capturas de la demo
-
-El proyecto incluye capturas visuales en la carpeta `wwwroot/images/Porfolio/`:
-
-- `Home.png`
-- `Login.png`
-- `Create.png`
-- `Edit.png`
-- `Users.png`
-
-Estas imágenes ayudan a narrar la experiencia de usuario y a presentar el proyecto como una pieza completa de portfolio.
+7. Prueba el caso de número duplicado para mostrar la validación de negocio.
 
 ## ⚙️ Requisitos
 
@@ -68,7 +57,7 @@ Estas imágenes ayudan a narrar la experiencia de usuario y a presentar el proye
 
 ## 🔐 Variables de entorno
 
-Ejemplo de configuración para correr el proyecto localmente de forma segura:
+Ejemplo de configuración segura para correr el proyecto localmente:
 
 ```env
 MSSQL_SA_PASSWORD=YourStrongPassword123!
@@ -76,40 +65,36 @@ APP_DB_USER=appuser
 APP_DB_PASSWORD=ChangeMe123!
 ```
 
-## 🗂️ Estructura del repositorio
+## 📘 Qué aprendí con este proyecto
 
-- `SistemaTelefonico/`: proyecto principal ASP.NET Core
-- `ST-portable.sql`: script de inicialización de SQL Server
-- `SistemaTelefonico/compose.yaml`: stack Docker Compose
-- `SistemaTelefonico/Dockerfile`: imagen de la app
-- `.github/workflows/dotnet-build.yml`: validador de build en Actions
+Este proyecto me permitió practicar de forma integral la construcción de una app web con:
 
-## 📚 Qué aprendí en este proyecto
+- ASP.NET Core MVC y Razor
+- ASP.NET Identity para autenticación
+- Entity Framework Core y SQL Server como capa de persistencia
+- Docker Compose para encapsular la base de datos y la app
+- GitHub Actions como base de validación automática de build
 
-- integración de ASP.NET Identity con Entity Framework Core
-- trabajo con SQL Server y Docker Compose en un flujo reproducible
-- validación de negocio con restricciones únicas en base de datos
-- preparación de un repositorio profesional con documentación y CI
+## 🧪 Validación de build
 
-## ✅ Validación de build
-
-La compilación del proyecto se validó con:
+La compilación de la app se validó con:
 
 ```bash
 dotnet build SistemaTelefonico/SistemaTelefonico.csproj --configuration Release
 ```
 
-Resultado verificado: compilación exitosa con warnings de dependencias, pero sin bloqueo funcional.
+La verificación realizada confirmó que el proyecto compila correctamente.
 
-## 🔒 Recomendaciones para repositorio público
+## 🔒 Recomendaciones para publicar en GitHub
 
-No publiques credenciales reales. Usa `.env` local o secretos gestionados por el entorno de despliegue.
+No publiques contraseñas reales. Usa `.env` local o secretos de despliegue para evitar exponer credenciales sensibles.
 
 ## 📝 Release Notes
 
-La versión actual está orientada a una presentación profesional de portfolio y entrega una base sólida para demostrar:
+### v1.0 - Portfolio Edition
 
-- el manejo de un CRUD con autenticación
-- integración con SQL Server y Docker
-- validaciones server-side
-- documentación y CI sobre GitHub
+- CRUD funcional con validaciones de negocio
+- autenticación con Identity
+- integración con SQL Server y Docker Compose
+- documentación orientada a GitHub y portfolio
+- CI básica con GitHub Actions
